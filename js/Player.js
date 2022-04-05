@@ -36,12 +36,27 @@ class Player {
   }
 
   static getPlayersInfo() {
-
     var playerInfoRef = database.ref("players");
     playerInfoRef.on("value", data => {
       allPlayers = data.val();
     });
-
-
   }
+
+  update(){
+    var playerIndex = "players/player" + this.index;
+    database.ref(playerIndex).update({
+      positionX: this.positionX,
+      positionY: this.positionY
+    })
+  }
+
+  getDistance(){
+    var playerDistanceRef = database.ref("players/player" + this.index);
+    playerDistanceRef.on("value", data => {
+      var data = data.val();
+      this.positionX = data.positionX;
+      this.positionY = data.positionY;
+    });
+  }
+
 }
